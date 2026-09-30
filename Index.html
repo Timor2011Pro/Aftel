@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aftellen</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        #countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .unit {
+            background: #222;
+            padding: 20px 25px;
+            border-radius: 12px;
+            min-width: 110px;
+        }
+
+        .number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .label {
+            margin-top: 5px;
+            color: #999;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        #finished {
+            display: none;
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            #countdown {
+                gap: 8px;
+            }
+
+            .unit {
+                min-width: 75px;
+                padding: 15px 10px;
+            }
+
+            .number {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Tot vrijdag 2 oktober 11:00</h1>
+
+        <div id="countdown">
+            <div class="unit">
+                <div class="number" id="days">0</div>
+                <div class="label">Dagen</div>
+            </div>
+
+            <div class="unit">
+                <div class="number" id="hours">0</div>
+                <div class="label">Uren</div>
+            </div>
+
+            <div class="unit">
+                <div class="number" id="minutes">0</div>
+                <div class="label">Minuten</div>
+            </div>
+
+            <div class="unit">
+                <div class="number" id="seconds">0</div>
+                <div class="label">Seconden</div>
+            </div>
+        </div>
+
+        <div id="finished">
+            🎉 Het is zover!
+        </div>
+    </div>
+
+    <script>
+        // Vrijdag 2 oktober 2026 om 11:00 Nederlandse tijd
+        const targetDate = new Date("2026-10-02T11:00:00+02:00");
+
+        function updateCountdown() {
+            const now = new Date();
+            const difference = targetDate - now;
+
+            if (difference <= 0) {
+                document.getElementById("countdown").style.display = "none";
+                document.getElementById("finished").style.display = "block";
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+                (difference / (1000 * 60 * 60)) % 24
+            );
+            const minutes = Math.floor(
+                (difference / (1000 * 60)) % 60
+            );
+            const seconds = Math.floor(
+                (difference / 1000) % 60
+            );
+
+            document.getElementById("days").textContent =
+                String(days).padStart(2, "0");
+
+            document.getElementById("hours").textContent =
+                String(hours).padStart(2, "0");
+
+            document.getElementById("minutes").textContent =
+                String(minutes).padStart(2, "0");
+
+            document.getElementById("seconds").textContent =
+                String(seconds).padStart(2, "0");
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+
+</body>
+</html>
